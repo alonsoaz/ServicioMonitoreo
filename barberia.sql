@@ -9,7 +9,7 @@ USE `barberia`;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -373,7 +373,7 @@ CREATE TABLE `ventas` (
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Barbero`(
 in
@@ -396,18 +396,18 @@ DECLARE V_IDDATOS INT;
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS d
+SELECT COUNT(*) INTO V_COUNT FROM datos d
 join cliente c on d.iddatos = c.iddatos
 WHERE DNI = P_DNI;
 
 IF V_COUNT = 0 THEN 
 
-SELECT idDatos into V_IDDATOS FROM Datos WHERE DNI = P_DNI; 
+SELECT idDatos into V_IDDATOS FROM datos WHERE DNI = P_DNI; 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-UPDATE Datos 
+UPDATE datos 
 
 SET		nombre = UPPER(P_nombre), 
 		apellido = UPPER(P_apellido), 
@@ -424,13 +424,13 @@ SET idEstado = P_idEstado, modifiedBy = P_usuario, DATEUPDATED = V_IDFECHA
 
 WHERE idBarbero = P_IDBarbero;
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS d
+SELECT COUNT(*) INTO V_COUNT FROM datos d
 join barbero c on d.iddatos = c.iddatos
 WHERE DNI = P_DNI;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -441,7 +441,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE, ' POSIBLEMENTE SE TRATE DE UN REGISTRO DUPLICADO') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE, ' POSIBLEMENTE SE TRATE DE UN REGISTRO DUPLICADO') AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -459,7 +459,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Cliente`(
 in
@@ -482,20 +482,20 @@ DECLARE V_IDDATOS INT;
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE DNI = P_DNI;
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE DNI = P_DNI;
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS d
+SELECT COUNT(*) INTO V_COUNT FROM datos d
 join barbero c on d.iddatos = c.iddatos
 WHERE DNI = P_DNI;
 
 IF V_COUNT = 0 THEN 
 
-SELECT idDatos into V_IDDATOS FROM Datos WHERE DNI = P_DNI; 
+SELECT idDatos into V_IDDATOS FROM datos WHERE DNI = P_DNI; 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-UPDATE Datos 
+UPDATE datos 
 
 SET		
 		nombre = UPPER(P_nombre), 
@@ -512,13 +512,13 @@ SET idEstado = P_idEstado, modifiedBy = P_usuario, DATEUPDATED = V_IDFECHA
 
 WHERE idCliente = P_idCliente;
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS d
+SELECT COUNT(*) INTO V_COUNT FROM datos d
 join cliente c on d.iddatos = c.iddatos
 WHERE DNI = P_DNI;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -529,7 +529,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE, ' POSIBLEMENTE SE TRATE DE UN REGISTRO DUPLICADO') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE, ' POSIBLEMENTE SE TRATE DE UN REGISTRO DUPLICADO') AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -547,7 +547,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Detalle_Venta`(
 
@@ -565,7 +565,7 @@ BEGIN
 	DECLARE V_COUNT INT; 
     
 if P_cantidad > P_stock then
-SELECT CONCAT(MENSAJE,', NO HAY STOCK DISPONIBLE.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', NO HAY STOCK DISPONIBLE.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 else
 
 SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE idEstado = 3 AND idDetalle_Venta = P_idDetalle_Venta;
@@ -598,7 +598,7 @@ SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE idVenta = P_idVenta and id
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 3), ': ', desEstado) as MENSAJE
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 3), ': ', desEstado) as MENSAJE
 FROM detalle_venta v
 join estado e on v.idEstado = e.idEstado
 WHERE idVenta = P_idVenta and idDetalle_Venta = P_idDetalle_Venta;
@@ -613,7 +613,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', NO SE PUDO CAMBIAR LA CANTIDAD.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', NO SE PUDO CAMBIAR LA CANTIDAD.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 end if;
 END IF;
     
@@ -631,7 +631,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Marca_Producto`(
 in
@@ -658,7 +658,7 @@ SELECT COUNT(*) INTO V_COUNT FROM marca_producto WHERE nombMarca = UPPER(P_nombM
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -669,7 +669,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -687,7 +687,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Producto`(
 in
@@ -709,14 +709,14 @@ DECLARE V_DETFECHA DATETIME;
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto WHERE idProducto = P_idProducto;
+SELECT COUNT(*) INTO V_COUNT FROM producto WHERE idProducto = P_idProducto;
 
 IF V_COUNT = 1 THEN 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-UPDATE Producto 
+UPDATE producto 
 
 SET idMarcaProducto = P_marca,
     idTipo_producto = P_tipo,
@@ -728,11 +728,11 @@ SET idMarcaProducto = P_marca,
     
 WHERE idProducto = P_idProducto; 
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto WHERE nomProd = UPPER(P_nomProd);
+SELECT COUNT(*) INTO V_COUNT FROM producto WHERE nomProd = UPPER(P_nomProd);
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -743,7 +743,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -761,7 +761,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Servicio`(
 in
@@ -782,14 +782,14 @@ DECLARE V_DETFECHA DATETIME;
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio WHERE idServicio = P_idServicio;
+SELECT COUNT(*) INTO V_COUNT FROM servicio WHERE idServicio = P_idServicio;
 
 IF V_COUNT = 1 THEN 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-UPDATE Servicio 
+UPDATE servicio 
 
 SET 
 	nomServ = UPPER(P_nomServ),
@@ -801,11 +801,11 @@ SET
     
 WHERE idServicio = P_idServicio; 
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio WHERE nomServ = UPPER(P_nomServ);
+SELECT COUNT(*) INTO V_COUNT FROM servicio WHERE nomServ = UPPER(P_nomServ);
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -816,7 +816,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -834,7 +834,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Tipo_Producto`(
 in
@@ -862,7 +862,7 @@ SELECT COUNT(*) INTO V_COUNT FROM tipo_producto WHERE idTipo_producto = P_idTipo
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -873,7 +873,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -891,7 +891,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Actualizar_Usuario`(
 in
@@ -908,11 +908,11 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Usuario WHERE idUsuario = P_idUsuario;
+SELECT COUNT(*) INTO V_COUNT FROM usuario WHERE idUsuario = P_idUsuario;
 
 IF V_COUNT = 1 THEN 
 
-UPDATE Usuario 
+UPDATE usuario 
 
 SET nombre = UPPER(P_nombre),
     apellido = UPPER(P_apellido),
@@ -923,11 +923,11 @@ SET nombre = UPPER(P_nombre),
     
 WHERE idUsuario = P_idUsuario; 
 
-SELECT COUNT(*) INTO V_COUNT FROM Usuario WHERE idusuario = P_idUsuario;
+SELECT COUNT(*) INTO V_COUNT FROM usuario WHERE idusuario = P_idUsuario;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 3;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 3;
 COMMIT;
 
 ELSE
@@ -938,7 +938,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -956,7 +956,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Barbero`(
 in P_words varchar(20),
@@ -966,7 +966,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Barbero c
+SELECT COUNT(*) INTO V_COUNT FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 where nombre like concat ('%',P_words,'%') or apellido like concat ('%',P_words,'%') or c.codBarbero like concat ('%',P_words,'%');
@@ -974,7 +974,7 @@ where nombre like concat ('%',P_words,'%') or apellido like concat ('%',P_words,
 IF V_COUNT > 0 THEN 
 
 IF V_COUNT = 1 THEN 
-SELECT idBarbero into P_idBarb FROM Barbero c
+SELECT idBarbero into P_idBarb FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 where nombre like concat ('%',P_words,'%') or apellido like concat ('%',P_words,'%') or c.codBarbero like concat ('%',P_words,'%');
@@ -993,7 +993,7 @@ SELECT
     dni as DNI,
     direccion as Direccion
     
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 
@@ -1015,7 +1015,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Barbero_Interno`(
 in P_words varchar(20),
@@ -1026,14 +1026,14 @@ BEGIN
 DECLARE V_COUNT INT;
 
 SELECT COUNT(*) INTO V_COUNT
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 where d.nombre like concat ('%',P_words,'%') or d.apellido like concat ('%',P_words,'%') or c.codBarbero like concat ('%',P_words,'%');
 
 IF V_COUNT > 0 THEN 
 
 IF V_COUNT = 1 THEN
-SELECT c.idBarbero INTO P_idBarbero FROM Barbero c join datos d on c.idDatos = d.idDatos
+SELECT c.idBarbero INTO P_idBarbero FROM barbero c join datos d on c.idDatos = d.idDatos
 where d.nombre like concat ('%',P_words,'%') or d.apellido like concat ('%',P_words,'%') or c.codBarbero like concat ('%',P_words,'%');
 ELSE
 SET P_idBarbero = 0;
@@ -1052,7 +1052,7 @@ SELECT
     u.aka as 'Modificado_Por',
     f.detFecha as 'Ultima_Modificacion'
     
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join usuario u on c.modifiedBy = u.idUsuario
 join fecha f on c.dateUpdated = f.idFecha
@@ -1076,7 +1076,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Cliente_Interno`(
 in P_words varchar(20),
@@ -1086,13 +1086,13 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Cliente c join datos d on c.idDatos = d.idDatos where d.nombre like concat ('%',P_words,'%') or d.apellido like concat ('%',P_words,'%') or codCliente like concat ('%',P_words,'%');
+SELECT COUNT(*) INTO V_COUNT FROM cliente c join datos d on c.idDatos = d.idDatos where d.nombre like concat ('%',P_words,'%') or d.apellido like concat ('%',P_words,'%') or codCliente like concat ('%',P_words,'%');
 
 IF V_COUNT > 0 THEN 
 
 if V_COUNT = 1 then
 SELECT c.idCliente into P_ID
-FROM Cliente c
+FROM cliente c
 join datos d on c.idDatos = d.idDatos
 where d.nombre like concat ('%',P_words,'%') or d.apellido like concat ('%',P_words,'%') or codCliente like concat ('%',P_words,'%');
 else set P_ID := 0; end if;
@@ -1110,7 +1110,7 @@ SELECT
     u.aka as 'Modificado_Por',
     f.detFecha as 'Ultima_Modificacion'
     
-FROM Cliente c
+FROM cliente c
 join datos d on c.idDatos = d.idDatos
 join usuario u on c.modifiedBy = u.idUsuario
 join fecha f on c.dateUpdated = f.idFecha
@@ -1134,7 +1134,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Producto`(
 in P_words varchar(20),
@@ -1144,7 +1144,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto p
+SELECT COUNT(*) INTO V_COUNT FROM producto p
 join tipo_producto t on p.idTipo_producto = t.idTipo_producto
 where nomProd like concat ('%',P_words,'%') or p.descripcion like concat ('%',P_words,'%') or codProducto like concat ('%',P_words,'%')
 or p.idMarcaProducto like concat ('%',P_words,'%') or p.idTipo_producto like concat ('%',P_words,'%');
@@ -1153,7 +1153,7 @@ IF V_COUNT > 0 THEN
 
 IF V_COUNT = 1 THEN
 SELECT  idProducto INTO P_ID
-FROM Producto p
+FROM producto p
 join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
 join tipo_producto t on p.idTipo_producto = t.idTipo_producto
 where nomProd like concat ('%',P_words,'%') or p.descripcion like concat ('%',P_words,'%') or codProducto like concat ('%',P_words,'%')
@@ -1173,7 +1173,7 @@ SELECT
     precio as Precio,
     p.descripcion as Descripcion
     
-FROM Producto p
+FROM producto p
 
 join estado e on p.idestado = e.idEstado
 join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
@@ -1198,7 +1198,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Producto_Interno`(
 in P_words varchar(20),
@@ -1208,7 +1208,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto p
+SELECT COUNT(*) INTO V_COUNT FROM producto p
 join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
 join tipo_producto t on p.idTipo_producto = t.idTipo_producto
 where nomProd like concat ('%',P_words,'%') or p.descripcion like concat ('%',P_words,'%') or codProducto like concat ('%',P_words,'%')
@@ -1217,7 +1217,7 @@ or p.idMarcaProducto like concat ('%',P_words,'%') or p.idTipo_producto like con
 IF V_COUNT > 0 THEN 
 IF V_COUNT = 1 THEN
 SELECT  p.idProducto INTO P_ID
-FROM Producto p 
+FROM producto p 
 join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
 join tipo_producto t on p.idTipo_producto = t.idTipo_producto
 where nomProd like concat ('%',P_words,'%') or p.descripcion like concat ('%',P_words,'%') or codProducto like concat ('%',P_words,'%')
@@ -1238,7 +1238,7 @@ SELECT
     aka as 'Modificado _por:',
 	detFecha as 'Ultima_modificacion'
     
-FROM Producto p
+FROM producto p
 
 Join usuario u on p.modifiedBy = u.idusuario
 Join fecha f on p.dateUpdated = f.idfecha
@@ -1265,7 +1265,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Servicio_Interno`(
 in P_words varchar(20),
@@ -1283,7 +1283,7 @@ IF V_COUNT > 0 THEN
 IF V_COUNT = 1 THEN 
 
 SELECT 	idServicio into P_idServicio
-FROM Servicio 
+FROM servicio 
 where nomServ like concat ('%',P_words,'%') or descripcion like concat ('%',P_words,'%') or codServicio like concat ('%',P_words,'%');
 
 else
@@ -1304,7 +1304,7 @@ SELECT
     aka as 'Modificado_por:',
 	detFecha as 'Ultima_modificacion'
 
-FROM Servicio s
+FROM servicio s
 Join usuario u on s.modifiedBy = u.idusuario
 Join fecha f on s.dateUpdated = f.idfecha
 join estado e on s.idestado = e.idEstado
@@ -1327,7 +1327,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Buscar_Usuario`(
 in P_words varchar(20),
@@ -1337,7 +1337,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM USUARIO where nombre like concat ('%',P_words,'%') or apellido like concat ('%',P_words,'%') or codUsuario like concat ('%',P_words,'%');
+SELECT COUNT(*) INTO V_COUNT FROM usuario where nombre like concat ('%',P_words,'%') or apellido like concat ('%',P_words,'%') or codUsuario like concat ('%',P_words,'%');
 
 IF V_COUNT > 0 THEN 
 
@@ -1377,7 +1377,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Cambiar_Clave_Cliente`(
 in
@@ -1388,17 +1388,17 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) into V_COUNT FROM Cliente WHERE idCliente = P_idCliente and pass = p_pass;
+SELECT COUNT(*) into V_COUNT FROM cliente WHERE idCliente = P_idCliente and pass = p_pass;
 
 IF V_COUNT = 1 THEN 
 
-UPDATE Cliente SET pass = p_newPass WHERE idCliente = P_idCliente; 
+UPDATE cliente SET pass = p_newPass WHERE idCliente = P_idCliente; 
 
-SELECT COUNT(*) INTO V_COUNT FROM Cliente WHERE idCliente = P_idCliente AND pass = p_newPass;
+SELECT COUNT(*) INTO V_COUNT FROM cliente WHERE idCliente = P_idCliente AND pass = p_newPass;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 13;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 13;
 COMMIT;
 
 ELSE
@@ -1409,7 +1409,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -1427,7 +1427,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Cambiar_Clave_Usuario`(
 in
@@ -1440,21 +1440,21 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Usuario WHERE idUsuario = P_idUsuario and pass = p_pass;
+SELECT COUNT(*) INTO V_COUNT FROM usuario WHERE idUsuario = P_idUsuario and pass = p_pass;
 
 IF V_COUNT = 1 THEN 
 
-UPDATE Usuario 
+UPDATE usuario 
 
 SET pass = p_newPass
     
 WHERE idUsuario = P_idUsuario; 
 
-SELECT COUNT(*) INTO V_COUNT FROM Usuario WHERE idUsuario = P_idUsuario AND pass = p_newPass;
+SELECT COUNT(*) INTO V_COUNT FROM usuario WHERE idUsuario = P_idUsuario AND pass = p_newPass;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 13;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 13;
 COMMIT;
 
 ELSE
@@ -1465,7 +1465,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 4;
+SELECT CONCAT(MENSAJE) AS mensaje FROM mensaje WHERE IDMENSAJE = 4;
 
 END IF;
 
@@ -1483,7 +1483,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Consultar_Disponibilidad_Barbero`(
 
@@ -1506,17 +1506,17 @@ BEGIN
     
 -- ANTES
 
-SELECT count(*) into V_COUNT_A FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT_A FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where r.idServicio = 1 AND CAST(ADDTIME(CAST(P_DTconsulta AS DATETIME), concat('00:',minutos,':00')) AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 -- DURANTE
 
-SELECT count(*) into V_COUNT_D FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT_D FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 where CAST(P_DTconsulta AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 IF V_COUNT_A = 1 OR V_COUNT_D = 1 THEN 
@@ -1533,17 +1533,17 @@ END IF;
 
 IF V_COUNT_A = 1 THEN 
 
-SELECT r.idReserva into V_RESERVA FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT r.idReserva into V_RESERVA FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where r.idServicio = P_idServicio AND CAST(ADDTIME(CAST(P_DTconsulta AS DATETIME), concat('00:',minutos,':00')) AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 SELECT CONCAT(
 ' ENTRE LAS: ', h.detFecha, ' Y ', f.detFecha, ' '
-) into V_A FROM RESERVA r
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+) into V_A FROM reserva r
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where r.idServicio = P_idServicio AND CAST(ADDTIME(CAST(P_DTconsulta AS DATETIME), concat('00:',minutos,':00')) AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
@@ -1555,16 +1555,16 @@ END IF;
 
 IF V_COUNT_D = 1 THEN 
 
-SELECT r.idReserva into V_RESERVA FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT r.idReserva into V_RESERVA FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 where CAST(P_DTconsulta AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 SELECT CONCAT(
 ' ENTRE LAS: ', h.detFecha, ' Y ', f.detFecha, ' '
-) into V_D FROM RESERVA r
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+) into V_D FROM reserva r
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 where CAST(P_DTconsulta AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 else
@@ -1573,11 +1573,11 @@ set V_D := '';
 
 END IF;
 
-SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM BARBERO B JOIN DATOS D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero), V_A, V_Y, V_D) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 15;
+SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM barbero B JOIN datos D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero), V_A, V_Y, V_D) AS mensaje FROM mensaje WHERE IDMENSAJE = 15;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM BARBERO B JOIN DATOS D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero)) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 7;
+SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM barbero B JOIN datos D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero)) AS mensaje FROM mensaje WHERE IDMENSAJE = 7;
 
 END IF;
     
@@ -1595,7 +1595,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Barbero`(
 in
@@ -1606,22 +1606,22 @@ BEGIN
 DECLARE V_COUNT INT;
 DECLARE V_IDDATOS INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Barbero WHERE idBarbero = P_idBarbero;
+SELECT COUNT(*) INTO V_COUNT FROM barbero WHERE idBarbero = P_idBarbero;
 
 IF V_COUNT = 1 THEN 
 
-SELECT d.idDatos into V_IDDATOS FROM Barbero B
-Join Datos d on B.idDatos = d.idDatos
+SELECT d.idDatos into V_IDDATOS FROM barbero B
+Join datos d on B.idDatos = d.idDatos
 WHERE idBarbero = P_idBarbero;
 
-DELETE FROM Barbero WHERE idBarbero = P_idBarbero;
-DELETE FROM Datos WHERE idDatos = V_IDDATOS; 
+DELETE FROM barbero WHERE idBarbero = P_idBarbero;
+DELETE FROM datos WHERE idDatos = V_IDDATOS; 
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE idDatos = V_IDDATOS; 
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE idDatos = V_IDDATOS; 
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -1632,7 +1632,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;
 
@@ -1650,7 +1650,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Cliente`(
 in
@@ -1661,22 +1661,22 @@ BEGIN
 DECLARE V_COUNT INT;
 DECLARE V_IDDATOS INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Cliente WHERE idCliente = P_idCliente;
+SELECT COUNT(*) INTO V_COUNT FROM cliente WHERE idCliente = P_idCliente;
 
 IF V_COUNT = 1 THEN 
 
-SELECT d.idDatos into V_IDDATOS FROM Cliente B
-Join Datos d on B.idDatos = d.idDatos
+SELECT d.idDatos into V_IDDATOS FROM cliente B
+Join datos d on B.idDatos = d.idDatos
 WHERE idCliente = P_idCliente;
 
-DELETE FROM Cliente WHERE idCliente = P_idCliente;
-DELETE FROM Datos WHERE idDatos = V_IDDATOS; 
+DELETE FROM cliente WHERE idCliente = P_idCliente;
+DELETE FROM datos WHERE idDatos = V_IDDATOS; 
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE idDatos = V_IDDATOS; 
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE idDatos = V_IDDATOS; 
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -1687,7 +1687,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;
 
@@ -1705,7 +1705,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Detalle_Venta`(
 
@@ -1717,20 +1717,20 @@ BEGIN
 DECLARE V_COUNT INT;
 declare venta int;
 
-SELECT COUNT(*) INTO V_COUNT FROM DETALLE_VENTA WHERE idDetalle_Venta = P_idDetalle_Venta and idEstado = 3;
+SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta and idEstado = 3;
 
 IF V_COUNT = 1 THEN 
 
-	select idventa into venta from DETALLE_VENTA WHERE idDetalle_Venta = P_idDetalle_Venta;
-	DELETE FROM DETALLE_VENTA WHERE idDetalle_Venta = P_idDetalle_Venta;
+	select idventa into venta from detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
+	DELETE FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
     
-    select count(*) into v_count from DETALLE_VENTA where idVenta = venta and idEstado = 3;
+    select count(*) into v_count from detalle_venta where idVenta = venta and idEstado = 3;
     
     if V_COUNT = 0 then
     
     update ventas set idEstado = 4 where idVenta = venta;
     
-    select count(*) into v_count from DETALLE_VENTA where idVenta = venta and idEstado = 4;
+    select count(*) into v_count from detalle_venta where idVenta = venta and idEstado = 4;
     
     if V_COUNT = 0 then
     
@@ -1740,11 +1740,11 @@ IF V_COUNT = 1 THEN
     
     end if;
     
-SELECT COUNT(*) INTO V_COUNT FROM DETALLE_VENTA WHERE idDetalle_Venta = P_idDetalle_Venta;
+SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -1755,7 +1755,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;    
     
@@ -1773,7 +1773,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_MarcaProducto`(
 in
@@ -1793,7 +1793,7 @@ SELECT COUNT(*) INTO V_COUNT FROM marca_producto WHERE idMarcaProducto = P_idMar
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -1804,7 +1804,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;
 
@@ -1822,7 +1822,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Producto`(
 in
@@ -1832,17 +1832,17 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto WHERE idProducto = P_idProducto;
+SELECT COUNT(*) INTO V_COUNT FROM producto WHERE idProducto = P_idProducto;
 
 IF V_COUNT = 1 THEN 
 
-DELETE FROM Producto WHERE idProducto = P_idProducto;
+DELETE FROM producto WHERE idProducto = P_idProducto;
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto WHERE idProducto = P_idProducto;
+SELECT COUNT(*) INTO V_COUNT FROM producto WHERE idProducto = P_idProducto;
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -1853,7 +1853,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;
 
@@ -1871,7 +1871,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Reserva_Por_Cliente`(
 
@@ -1883,9 +1883,9 @@ BEGIN
 
 	DECLARE V_COUNT INT;    
 
-SELECT count(*) into V_COUNT FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where idCliente = P_idCliente and r.idestado = 3;
 
@@ -1935,7 +1935,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Servicio`(
 in
@@ -1945,17 +1945,17 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio WHERE idServicio = P_idServicio;
+SELECT COUNT(*) INTO V_COUNT FROM servicio WHERE idServicio = P_idServicio;
 
 IF V_COUNT = 1 THEN 
 
-DELETE FROM Servicio WHERE idServicio = P_idServicio;
+DELETE FROM servicio WHERE idServicio = P_idServicio;
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio WHERE idServicio = P_idServicio;
+SELECT COUNT(*) INTO V_COUNT FROM servicio WHERE idServicio = P_idServicio;
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -1966,7 +1966,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;
 
@@ -1984,7 +1984,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Tipo_Producto`(
 in
@@ -2004,7 +2004,7 @@ SELECT COUNT(*) INTO V_COUNT FROM tipo_producto WHERE idTipo_producto = P_idTipo
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -2015,7 +2015,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;
 
@@ -2033,7 +2033,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Eliminar_Venta`(
 
@@ -2045,19 +2045,19 @@ BEGIN
 DECLARE V_COUNT INT;
 DECLARE V_IDVENTA INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM VENTAS WHERE idCliente = P_idCliente and idEstado = 3;
+SELECT COUNT(*) INTO V_COUNT FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;
 
 IF V_COUNT = 1 THEN 
 	
     SELECT IDVENTA INTO V_IDVENTA FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;
-	DELETE FROM DETALLE_VENTA WHERE IDVENTA = V_IDVENTA;
-    DELETE FROM VENTAS WHERE idCliente = P_idCliente and idEstado = 3;
+	DELETE FROM detalle_venta WHERE IDVENTA = V_IDVENTA;
+    DELETE FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;
 
-SELECT COUNT(*) INTO V_COUNT FROM VENTAS WHERE idVenta = V_IDVENTA;
+SELECT COUNT(*) INTO V_COUNT FROM ventas WHERE idVenta = V_IDVENTA;
 
 IF V_COUNT = 0 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 5;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 5;
 COMMIT;
 
 ELSE
@@ -2068,7 +2068,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 6;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 6;
 
 END IF;        
     
@@ -2087,7 +2087,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Generar_Reserva_Barbero`(
 
@@ -2128,17 +2128,17 @@ IF V_COUNT = 0 THEN
 
 -- ANTES
 
-SELECT count(*) into V_COUNT_A FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT_A FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where r.idServicio = 1 AND CAST(ADDTIME(CAST(P_DTconsulta AS DATETIME), concat('00:',minutos,':00')) AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 -- DURANTE
 
-SELECT count(*) into V_COUNT_D FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT_D FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 where CAST(P_DTconsulta AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 IF V_COUNT_A = 1 OR V_COUNT_D = 1 THEN 
@@ -2155,17 +2155,17 @@ END IF;
 
 IF V_COUNT_A = 1 THEN 
 
-SELECT r.idReserva into V_RESERVA FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT r.idReserva into V_RESERVA FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where r.idServicio = P_idServicio AND CAST(ADDTIME(CAST(P_DTconsulta AS DATETIME), concat('00:',minutos,':00')) AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 SELECT CONCAT(
 ' ENTRE LAS: ', h.detFecha, ' Y ', f.detFecha, ' '
-) into V_A FROM RESERVA r
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+) into V_A FROM reserva r
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where r.idServicio = P_idServicio AND CAST(ADDTIME(CAST(P_DTconsulta AS DATETIME), concat('00:',minutos,':00')) AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
@@ -2177,16 +2177,16 @@ END IF;
 
 IF V_COUNT_D = 1 THEN 
 
-SELECT r.idReserva into V_RESERVA FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT r.idReserva into V_RESERVA FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 where CAST(P_DTconsulta AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 SELECT CONCAT(
 ' ENTRE LAS: ', h.detFecha, ' Y ', f.detFecha, ' '
-) into V_D FROM RESERVA r
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+) into V_D FROM reserva r
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 where CAST(P_DTconsulta AS DATETIME) between h.detfecha and f.detFecha and idBarbero = P_idBarbero;
 
 else
@@ -2195,20 +2195,20 @@ set V_D := '';
 
 END IF;
 
-SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM BARBERO B JOIN DATOS D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero), V_A, V_Y, V_D) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 15;
+SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM barbero B JOIN datos D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero), V_A, V_Y, V_D) AS mensaje FROM mensaje WHERE IDMENSAJE = 15;
 
 ELSE
 
 set V_DETFECHA := cast(P_DTconsulta as datetime);
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA into V_IDFECHA FROM FECHA WHERE DETFECHA = CAST(P_DTconsulta AS DATETIME) and registered = CURTIME();
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA into V_IDFECHA FROM fecha WHERE DETFECHA = CAST(P_DTconsulta AS DATETIME) and registered = CURTIME();
 
 SELECT cast(ADDTIME(CAST(V_DETFECHA AS DATETIME), concat('00:',minutos,':00')) as datetime) into V_DETFECHAFIN from servicio where idServicio = P_idServicio;
 
 -- set V_DETFECHAFIN := cast(('2018/12/20 06:51:00' + MINUTOS) as datetime);
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHAFIN, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHFIN FROM FECHA WHERE DETFECHA = V_DETFECHAFIN and registered = CURTIME();
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHAFIN, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHFIN FROM fecha WHERE DETFECHA = V_DETFECHAFIN and registered = CURTIME();
 
     set V_MAX = ( select last_insert_id() from reserva limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
@@ -2232,7 +2232,7 @@ commit;
 
 select idReserva into P_idReserva from reserva where codReserva = V_COD;
 
-SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM BARBERO B JOIN DATOS D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero)) AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 8;
+SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM barbero B JOIN datos D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero)) AS mensaje FROM mensaje WHERE IDMENSAJE = 8;
 
 END IF;
 
@@ -2252,7 +2252,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Barbero`(
 in
@@ -2275,14 +2275,14 @@ DECLARE V_COD VARCHAR(6);
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE DNI = P_DNI;
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE DNI = P_DNI;
 
 IF V_COUNT = 0 THEN 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-INSERT INTO DATOS 
+INSERT INTO datos 
 
 	(nombre,
     apellido,
@@ -2300,9 +2300,9 @@ VALUES
     UPPER(P_correo),
     UPPER(P_direccion));
     
-SELECT IDDATOS INTO V_IDDATOS FROM DATOS WHERE DNI = P_DNI;    
+SELECT IDDATOS INTO V_IDDATOS FROM datos WHERE DNI = P_DNI;    
 
-        set V_MAX = ( select idBarbero from Barbero order by 1 desc limit 1 );
+        set V_MAX = ( select idBarbero from barbero order by 1 desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('B000'  ,  CAST(V_MAX as CHAR)));
@@ -2319,15 +2319,15 @@ SELECT IDDATOS INTO V_IDDATOS FROM DATOS WHERE DNI = P_DNI;
 		set V_COD = (select 'B0001');
 	end if;
 
-INSERT INTO Barbero (IDDATOS, CODBARBERO, IDESTADO, MODIFIEDBY, DATEUPDATED) VALUES (V_IDDATOS, V_COD, 1, P_usuario, V_IDFECHA);
+INSERT INTO barbero (IDDATOS, CODBARBERO, IDESTADO, MODIFIEDBY, DATEUPDATED) VALUES (V_IDDATOS, V_COD, 1, P_usuario, V_IDFECHA);
 
-SELECT MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT mensaje FROM mensaje WHERE IDMENSAJE = 1;
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE DNI = P_DNI;
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE DNI = P_DNI;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 1;
 COMMIT;
 
 ELSE
@@ -2338,7 +2338,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 
@@ -2356,7 +2356,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Cliente`(
 in
@@ -2382,15 +2382,15 @@ DECLARE V_COD VARCHAR(6);
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE DNI = P_DNI;
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE DNI = P_DNI;
 set P_idCliente := 0;
 
 IF V_COUNT = 0 THEN 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-INSERT INTO DATOS 
+INSERT INTO datos 
 
 	(nombre,
     apellido,
@@ -2408,9 +2408,9 @@ VALUES
     UPPER(P_correo),
     UPPER(P_direccion));
     
-SELECT IDDATOS INTO V_IDDATOS FROM DATOS WHERE DNI = P_DNI;    
+SELECT IDDATOS INTO V_IDDATOS FROM datos WHERE DNI = P_DNI;    
 
-	set V_MAX = ( select idCliente from Cliente order by 1 desc limit 1 );
+	set V_MAX = ( select idCliente from cliente order by 1 desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('C000'  ,  CAST(V_MAX as CHAR)));
@@ -2427,15 +2427,15 @@ SELECT IDDATOS INTO V_IDDATOS FROM DATOS WHERE DNI = P_DNI;
 		set V_COD = (select 'C0001');
 	end if;
 
-INSERT INTO Cliente (IDDATOS, CODCLIENTE, IDESTADO, PASS, MODIFIEDBY, DATEUPDATED) VALUES (V_IDDATOS, V_COD, 1, P_password,P_usuario, V_IDFECHA);
+INSERT INTO cliente (IDDATOS, CODCLIENTE, IDESTADO, PASS, MODIFIEDBY, DATEUPDATED) VALUES (V_IDDATOS, V_COD, 1, P_password,P_usuario, V_IDFECHA);
 
-SELECT MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT mensaje FROM mensaje WHERE IDMENSAJE = 1;
 
-SELECT COUNT(*) INTO V_COUNT FROM DATOS WHERE DNI = P_DNI;
+SELECT COUNT(*) INTO V_COUNT FROM datos WHERE DNI = P_DNI;
 
 IF V_COUNT = 1 THEN 
 
-		SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 10), ' CLIENTE: ', concat(nombre,' ', apellido)) as MENSAJE, idCliente as id
+		SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 10), ' CLIENTE: ', concat(nombre,' ', apellido)) as MENSAJE, idCliente as id
 		FROM datos d
 		join cliente c on d.idDatos = c.idDatos
 		where DNI = P_DNI and Telefono = P_Telefono
@@ -2456,7 +2456,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 
@@ -2474,7 +2474,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Marca_Producto`(
 in
@@ -2515,13 +2515,13 @@ VALUES
 
 	(UPPER(P_nombMarca), V_COD, 1);
 
-SELECT MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT mensaje FROM mensaje WHERE IDMENSAJE = 1;
 
 SELECT COUNT(*) INTO V_COUNT FROM marca_producto WHERE nombMarca = UPPER(P_nombMarca) AND codMarca = V_COD;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 1;
 COMMIT;
 
 ELSE
@@ -2532,7 +2532,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 
@@ -2550,7 +2550,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Producto`(
 in
@@ -2573,14 +2573,14 @@ DECLARE V_COD VARCHAR(6);
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM PRODUCTO WHERE nomProd = P_nomProd;
+SELECT COUNT(*) INTO V_COUNT FROM producto WHERE nomProd = P_nomProd;
 
 IF V_COUNT = 0 THEN 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-	set V_MAX = ( select last_insert_id() from Producto LIMIT 1);
+	set V_MAX = ( select last_insert_id() from producto LIMIT 1);
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('P000'  ,  CAST(V_MAX as CHAR)));
@@ -2597,7 +2597,7 @@ SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
 		set V_COD = (select 'P0001');
 	end if;
 
-INSERT INTO PRODUCTO 
+INSERT INTO producto 
 
 	(codProducto,
     idMarcaProducto,
@@ -2621,13 +2621,13 @@ VALUES
     UPPER(P_descripcion),
     P_usuario, V_IDFECHA);
 
-SELECT MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT mensaje FROM mensaje WHERE IDMENSAJE = 1;
 
-SELECT COUNT(*) INTO V_COUNT FROM PRODUCTO WHERE nomProd = UPPER(P_nomProd) and codProducto = V_COD;
+SELECT COUNT(*) INTO V_COUNT FROM producto WHERE nomProd = UPPER(P_nomProd) and codProducto = V_COD;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 1;
 COMMIT;
 
 ELSE
@@ -2638,7 +2638,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 
@@ -2656,7 +2656,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Servicio`(
 in
@@ -2677,14 +2677,14 @@ DECLARE V_COD VARCHAR(6);
 
 SET V_DETFECHA := CURTIME();
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio WHERE nomServ = P_nomServ;
+SELECT COUNT(*) INTO V_COUNT FROM servicio WHERE nomServ = P_nomServ;
 
 IF V_COUNT = 0 THEN 
 
-INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
+INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-	set V_MAX = ( select idServicio from Servicio order by 1 desc limit 1);
+	set V_MAX = ( select idServicio from servicio order by 1 desc limit 1);
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('S000'  ,  CAST(V_MAX as CHAR)));
@@ -2701,7 +2701,7 @@ SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA;
 		set V_COD = (select 'S0001');
 	end if;
 
-INSERT INTO Servicio 
+INSERT INTO servicio 
 
 	(codServicio,
     nomServ,
@@ -2721,13 +2721,13 @@ VALUES
     UPPER(P_descripcion),
     P_usuario, V_IDFECHA);
 
-SELECT MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT mensaje FROM mensaje WHERE IDMENSAJE = 1;
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio WHERE nomServ = UPPER(P_nomServ) and codServicio = V_COD;
+SELECT COUNT(*) INTO V_COUNT FROM servicio WHERE nomServ = UPPER(P_nomServ) and codServicio = V_COD;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 1;
 COMMIT;
 
 ELSE
@@ -2738,7 +2738,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 
@@ -2756,7 +2756,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Tipo_Producto`(
 in
@@ -2778,13 +2778,13 @@ VALUES
 
 	(UPPER(P_detalle),1);
 
-SELECT MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT mensaje FROM mensaje WHERE IDMENSAJE = 1;
 
 SELECT COUNT(*) INTO V_COUNT FROM tipo_producto WHERE detalle = UPPER(P_detalle);
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT(MENSAJE,'') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 1;
+SELECT CONCAT(MENSAJE,'') AS mensaje FROM mensaje WHERE IDMENSAJE = 1;
 COMMIT;
 
 ELSE
@@ -2795,7 +2795,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 
@@ -2813,7 +2813,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Insertar_Usuario`(
 
@@ -2839,11 +2839,11 @@ DECLARE V_COD VARCHAR(6);
 
 set P_idUsuario := 0;
 
-SELECT COUNT(*) into V_COUNT FROM USUARIO WHERE idTipo_Usuario = P_idTipoUsuario;
+SELECT COUNT(*) into V_COUNT FROM usuario WHERE idTipo_Usuario = P_idTipoUsuario;
 
 IF V_COUNT = 0 THEN 
 
-    set V_MAX = ( select idUsuario from Usuario order by 1 desc limit 1 );
+    set V_MAX = ( select idUsuario from usuario order by 1 desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('U000'  ,  CAST(V_MAX as CHAR)));
@@ -2862,7 +2862,7 @@ IF V_COUNT = 0 THEN
 
 Select detalle into P_cargo from tipo_usuario where idTipo_Usuario = P_idTipoUsuario;
 
-INSERT INTO USUARIO 
+INSERT INTO usuario 
 
 	(idTipo_Usuario,
     codUsuario,
@@ -2888,11 +2888,11 @@ VALUES
     P_telefono,
     UPPER(P_descripcion));
 
-SELECT COUNT(*) INTO V_COUNT FROM USUARIO WHERE idTipo_Usuario = P_idTipoUsuario;
+SELECT COUNT(*) INTO V_COUNT FROM usuario WHERE idTipo_Usuario = P_idTipoUsuario;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 10), ' USUARIO: ', AKA) AS MENSAJE
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 10), ' USUARIO: ', AKA) AS MENSAJE
 FROM USUARIO
 where aka = p_aka and pass = p_pass;
 
@@ -2912,7 +2912,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO, DEBE INICIAR SESION') as MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO, DEBE INICIAR SESION') as mensaje FROM mensaje WHERE IDMENSAJE = 2;
 SET P_idUsuario = 0;
 
 END IF;
@@ -2931,7 +2931,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Barbero`(
 
@@ -2950,7 +2950,7 @@ SELECT
 	concat(d.nombre,' ',d.apellido)
 	as 'Nombre del Barbero'
     
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 where c.idEstado = 1
@@ -2972,7 +2972,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Barbero_Interno`(
 
@@ -2998,7 +2998,7 @@ SELECT
     u.aka as 'Modificado_Por',
     f.detFecha as 'Ultima_Modificacion'
     
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join usuario u on c.modifiedBy = u.idUsuario
 join fecha f on c.dateUpdated = f.idFecha
@@ -3021,7 +3021,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Cliente_Interno`(
 
@@ -3047,7 +3047,7 @@ SELECT
     u.aka as 'Modificado_Por',
     f.detFecha as 'Ultima_Modificacion'
     
-FROM Cliente c
+FROM cliente c
 join datos d on c.idDatos = d.idDatos
 join usuario u on c.modifiedBy = u.idUsuario
 join fecha f on c.dateUpdated = f.idFecha
@@ -3070,7 +3070,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Marca_Interno`(
 
@@ -3111,7 +3111,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Producto`(
 
@@ -3131,7 +3131,7 @@ SELECT
     precio as Precio,
     p.descripcion as Descripcion
     
-FROM Producto p
+FROM producto p
 join estado e on p.idestado = e.idEstado
 join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
 join tipo_producto t on p.idTipo_producto = t.idTipo_producto
@@ -3154,7 +3154,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Producto_Interno`(
 
@@ -3181,7 +3181,7 @@ SELECT
     aka as 'Modificado _por:',
 	detFecha as 'Ultima_modificacion'
     
-FROM Producto p
+FROM producto p
 
 Join usuario u on p.modifiedBy = u.idusuario
 Join fecha f on p.dateUpdated = f.idfecha
@@ -3206,7 +3206,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Reservas_Por_Barbero_Interno`(
 
@@ -3217,9 +3217,9 @@ BEGIN
 
 	DECLARE V_COUNT INT;    
 
-SELECT count(*) into V_COUNT FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where idBarbero = P_idBarbero and r.idestado = 3;
 
@@ -3235,7 +3235,7 @@ h.detFecha as 'INICIO',
 h.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from RESERVA r
+from reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -3254,7 +3254,7 @@ SELECT
 
 CONCAT('NO EXISTEN RESERVAS PENDIENTES PARA EL BARBERO: ',d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from Barbero c
+from barbero c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -3276,7 +3276,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Reservas_Por_Cliente`(
 
@@ -3287,9 +3287,9 @@ BEGIN
 
 	DECLARE V_COUNT INT;    
 
-SELECT count(*) into V_COUNT FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where idCliente = P_idCliente;
 
@@ -3306,7 +3306,7 @@ h.detFecha as 'INICIO',
 f.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from RESERVA r
+from reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -3336,7 +3336,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Reservas_Por_Cliente_Interno`(
 
@@ -3347,9 +3347,9 @@ BEGIN
 
 	DECLARE V_COUNT INT;    
 
-SELECT count(*) into V_COUNT FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where idCliente = P_idCliente and r.idestado = 3;
 
@@ -3365,7 +3365,7 @@ h.detFecha as 'INICIO',
 h.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from RESERVA r
+from reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -3406,7 +3406,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Servicio`(
 
@@ -3426,7 +3426,7 @@ SELECT
     minutos as Duracion,
     precio as Precio
 
-FROM Servicio s
+FROM servicio s
 join estado e on s.idestado = e.idEstado
 where s.idestado = 1
 ;
@@ -3447,7 +3447,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Servicio_Interno`(
 
@@ -3472,7 +3472,7 @@ SELECT
     aka as 'Modificado_por:',
 	detFecha as 'Ultima_modificacion'
     
-FROM Servicio p
+FROM servicio p
 
 Join usuario u on p.modifiedBy = u.idusuario
 Join fecha f on p.dateUpdated = f.idfecha
@@ -3495,7 +3495,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_TipoProducto_Interno`(
 
@@ -3535,7 +3535,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Listar_Usuario`(
 
@@ -3577,7 +3577,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Login_Cliente`(
 
@@ -3597,7 +3597,7 @@ declare V_COUNT INT;
     
     IF V_COUNT = 1 THEN 
     
-		SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 10), ' CLIENTE: ', concat(nombre,' ', apellido)) as MENSAJE
+		SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 10), ' CLIENTE: ', concat(nombre,' ', apellido)) as MENSAJE
 		FROM datos d
         join cliente c on d.idDatos = c.idDatos
 		where DNI = P_DNI and pass = P_password;
@@ -3614,7 +3614,7 @@ declare V_COUNT INT;
     
 			IF V_COUNT = 1 THEN 
     
-				SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 11), ' CLIENTE: ', concat(nombre,' ', apellido)) AS MENSAJE
+				SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 11), ' CLIENTE: ', concat(nombre,' ', apellido)) AS MENSAJE
 				FROM datos d
 				join cliente c on d.idDatos = c.idDatos
 				where DNI = P_DNI
@@ -3622,7 +3622,7 @@ declare V_COUNT INT;
     
 			ELSE
     
-				SELECT MENSAJE FROM MENSAJE WHERE idMensaje = 12;
+				SELECT mensaje FROM mensaje WHERE idMensaje = 12;
     
 			END IF;
     
@@ -3642,7 +3642,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Login_Usuario`(
 
@@ -3658,7 +3658,7 @@ declare V_COUNT INT;
     
     IF V_COUNT = 1 THEN 
     
-		SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 10), ' USUARIO: ', AKA) as MENSAJE, idUsuario as id
+		SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 10), ' USUARIO: ', AKA) as MENSAJE, idUsuario as id
 		FROM USUARIO
 		where aka = P_AKA and pass = P_pass
 		;
@@ -3673,14 +3673,14 @@ declare V_COUNT INT;
     
 			IF V_COUNT = 1 THEN 
     
-				SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 11), ' USUARIO: ', AKA) AS MENSAJE
+				SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 11), ' USUARIO: ', AKA) AS MENSAJE
 				FROM USUARIO
 				where aka = P_AKA
 				;
 
 			ELSE
     
-				SELECT MENSAJE FROM MENSAJE WHERE idMensaje = 12;
+				SELECT mensaje FROM mensaje WHERE idMensaje = 12;
     
 			END IF;
     
@@ -3700,7 +3700,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Mostrar_Detalle_Venta`(
 
@@ -3729,14 +3729,14 @@ BEGIN
            
     FROM detalle_venta dv
     
-    join Ventas v on dv.idVenta = v.idVenta
+    join ventas v on dv.idVenta = v.idVenta
     join fecha f on v.idFecha = f.idFecha
     join producto p on dv.idItem = p.idProducto
     join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
     join tipo_producto t on p.idTipo_producto = t.idTipo_producto
-    join Cliente c ON c.idCliente = v.idCliente
-    join Datos a on c.idDatos = a.idDatos
-    join ESTADO e on dv.idEstado = e.idEstado
+    join cliente c ON c.idCliente = v.idCliente
+    join datos a on c.idDatos = a.idDatos
+    join estado e on dv.idEstado = e.idEstado
     
     WHERE v.idCliente = P_idCliente AND dv.idEstado = 3
     
@@ -3756,7 +3756,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Mostrar_Detalle_Venta_Interno`(
 
@@ -3785,14 +3785,14 @@ BEGIN
            
     FROM detalle_venta dv
     
-    join Ventas v on dv.idVenta = v.idVenta
+    join ventas v on dv.idVenta = v.idVenta
     join fecha f on v.idFecha = f.idFecha
     join producto p on dv.idItem = p.idProducto
     join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
     join tipo_producto t on p.idTipo_producto = t.idTipo_producto
-    join Cliente c ON c.idCliente = v.idCliente
-    join Datos a on c.idDatos = a.idDatos
-    join ESTADO e on dv.idEstado = e.idEstado
+    join cliente c ON c.idCliente = v.idCliente
+    join datos a on c.idDatos = a.idDatos
+    join estado e on dv.idEstado = e.idEstado
     
 	ORDER BY v.idFecha desc;
     
@@ -3810,7 +3810,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Mostrar_Detalle_Venta_Pagada`(
 
@@ -3837,14 +3837,14 @@ BEGIN
            
     FROM detalle_venta dv
     
-    join Ventas v on dv.idVenta = v.idVenta
+    join ventas v on dv.idVenta = v.idVenta
     join fecha f on v.idFecha = f.idFecha
     join producto p on dv.idItem = p.idProducto
     join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
     join tipo_producto t on p.idTipo_producto = t.idTipo_producto
-    join Cliente c ON c.idCliente = v.idCliente
-    join Datos a on c.idDatos = a.idDatos
-    join ESTADO e on dv.idEstado = e.idEstado
+    join cliente c ON c.idCliente = v.idCliente
+    join datos a on c.idDatos = a.idDatos
+    join estado e on dv.idEstado = e.idEstado
     
     WHERE dv.idVenta = P_idVenta and v.idCliente = P_idCliente AND dv.idEstado = 4
     
@@ -3864,7 +3864,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Mostrar_Venta_Interno`(
 
@@ -3881,14 +3881,14 @@ BEGIN
            (select sum(subtotal) from detalle_venta t 
            join ventas v on t.idVenta = v.idVenta 
            where v.idVenta = t.idVenta) 				as TOTAL, 
-           f.detFecha AS FECHA 
+           f.detFecha AS fecha 
     
-    FROM VENTAS v
+    FROM ventas v
     
     join fecha f on v.idFecha = f.idFecha
-    join Cliente c ON v.idCliente = c.idCliente
-    join Datos a on c.idDatos = a.idDatos
-    join ESTADO e on v.idEstado = e.idEstado
+    join cliente c ON v.idCliente = c.idCliente
+    join datos a on c.idDatos = a.idDatos
+    join estado e on v.idEstado = e.idEstado
     ORDER BY v.idFecha desc;
     
 END ;;
@@ -3905,7 +3905,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Mostrar_Venta_Pagada`(
 
@@ -3920,14 +3920,14 @@ select v.idVenta,
            e.desestado as ESTADO,
            concat(a.Nombre,' ', a.Apellido) 			AS CLIENTE,
 		   sum(subtotal) as TOTAL,
-           f.detFecha AS FECHA 
+           f.detFecha AS fecha 
            
            from detalle_venta t 
            join ventas v on t.idVenta = v.idVenta
            join fecha f on v.idFecha = f.idFecha
-		   join Cliente c ON v.idCliente = c.idCliente
-           join Datos a on c.idDatos = a.idDatos
-		   join ESTADO e on v.idEstado = e.idEstado
+		   join cliente c ON v.idCliente = c.idCliente
+           join datos a on c.idDatos = a.idDatos
+		   join estado e on v.idEstado = e.idEstado
            WHERE v.idEstado = 4 and v.idCliente = P_idCliente
            group by(v.idVenta) order by v.idVenta desc, v.idfecha desc				 
     
@@ -3947,7 +3947,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Mostrar_Venta_Por_Pagar`(
 
@@ -3957,7 +3957,7 @@ OUT P_idVenta int
 )
 BEGIN
 
-Select idVenta into P_idVenta FROM VENTAS v WHERE v.idEstado = 3 and v.idCliente = P_idCliente;
+Select idVenta into P_idVenta FROM ventas v WHERE v.idEstado = 3 and v.idCliente = P_idCliente;
 
 	SELECT 
 		   
@@ -3968,14 +3968,14 @@ Select idVenta into P_idVenta FROM VENTAS v WHERE v.idEstado = 3 and v.idCliente
            (select sum(subtotal) from detalle_venta t 
            join ventas v on t.idVenta = v.idVenta
            where t.idEstado = 3 and v.idCliente = P_idCliente) 		as TOTAL, 
-           f.detFecha AS FECHA 
+           f.detFecha AS fecha 
     
-    FROM VENTAS v
+    FROM ventas v
     
     join fecha f on v.idFecha = f.idFecha
-    join Cliente c ON v.idCliente = c.idCliente
-    join Datos a on c.idDatos = a.idDatos
-    join ESTADO e on v.idEstado = e.idEstado
+    join cliente c ON v.idCliente = c.idCliente
+    join datos a on c.idDatos = a.idDatos
+    join estado e on v.idEstado = e.idEstado
     WHERE v.idEstado = 3 and v.idCliente = P_idCliente
     ORDER BY v.idFecha desc;
     
@@ -3993,7 +3993,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Pagar_Reserva_Por_Cliente`(
 
@@ -4005,9 +4005,9 @@ BEGIN
 
 	DECLARE V_COUNT INT;    
 
-SELECT count(*) into V_COUNT FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where idCliente = P_idCliente and r.idestado = 3;
 
@@ -4018,7 +4018,7 @@ where r.idCliente = P_idCliente and r.idestado = 3 and r.idReserva = P_idReserva
 COMMIT;
 SELECT
 
-CONCAT('SE PAGÓ LA RESERVA DEL CLIENTE: ', d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
+CONCAT('SE PAGÓ LA reserva DEL CLIENTE: ', d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
 from cliente c
 
@@ -4054,7 +4054,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Barbero_Android`(
 in P_idBarbero int
@@ -4066,7 +4066,7 @@ SELECT
 c.idBarbero,
 concat(d.nombre,' ',d.apellido)	as 'Nombre_del_Barbero'
     
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 
@@ -4086,7 +4086,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Barbero_Interno`(
 in P_idBarbero int
@@ -4103,7 +4103,7 @@ dni,
 correo,
 direccion
     
-FROM Barbero c
+FROM barbero c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 
@@ -4123,7 +4123,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Cliente_Interno`(
 in P_ID int
@@ -4140,7 +4140,7 @@ SELECT
     direccion,
 	c.idEstado
     
-FROM Cliente c
+FROM cliente c
 join datos d on c.idDatos = d.idDatos
 join estado e on c.idestado = e.idEstado
 
@@ -4160,7 +4160,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Detalle_Venta`(
 
@@ -4196,7 +4196,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Marca_Interno`(
 in P_ID int
@@ -4228,7 +4228,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Producto_Android`(
 in P_ID INT
@@ -4244,7 +4244,7 @@ SELECT
     precio,
     descripcion
     
-FROM Producto p
+FROM producto p
 
 where idProducto = P_ID;
 
@@ -4262,7 +4262,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Producto_Interno`(
 in P_ID INT
@@ -4281,7 +4281,7 @@ SELECT
     precio,
     p.descripcion
     
-FROM Producto p
+FROM producto p
 
 join marca_producto m on p.idMarcaProducto = m.idMarcaProducto
 join tipo_producto t on p.idTipo_producto = t.idTipo_producto
@@ -4302,7 +4302,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Reserva_Por_Cliente`(
 
@@ -4314,9 +4314,9 @@ BEGIN
 
 	DECLARE V_COUNT INT;    
 
-SELECT count(*) into V_COUNT FROM RESERVA r 
-join FECHA h ON r.idHoraIni = h.idFecha 
-join FECHA f ON r.idHoraFin = f.idFecha
+SELECT count(*) into V_COUNT FROM reserva r 
+join fecha h ON r.idHoraIni = h.idFecha 
+join fecha f ON r.idHoraFin = f.idFecha
 join servicio s ON r.idServicio = s.idServicio
 where idCliente = P_idCliente and r.idestado = 3;
 
@@ -4333,7 +4333,7 @@ h.detFecha as 'INICIO',
 f.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from RESERVA r
+from reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -4374,7 +4374,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Servicio_Android`(
 in P_idServicio int
@@ -4387,7 +4387,7 @@ SELECT
     minutos,
     precio
 
-FROM Servicio s
+FROM servicio s
 join estado e on s.idestado = e.idEstado
 
 where idServicio = P_idServicio;
@@ -4406,7 +4406,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Servicio_Interno`(
 in P_idServicio int
@@ -4422,7 +4422,7 @@ SELECT
     descripcion,
     modifiedBy
 
-FROM Servicio s
+FROM servicio s
 join estado e on s.idestado = e.idEstado
 
 where idServicio = P_idServicio;
@@ -4441,7 +4441,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_TipoProducto_Interno`(
 in p_id int
@@ -4471,7 +4471,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Tipo_Usuario`(
 )
@@ -4511,7 +4511,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Recuperar_Usuario`(
 in P_id int
@@ -4546,7 +4546,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Registrar_Detalle_Venta_Pagada`(
 
@@ -4568,13 +4568,13 @@ IF V_COUNT > 0 THEN
 	    
 SELECT idVenta INTO  V_VENTA  FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
         
-SELECT COUNT(*) INTO V_COUNT FROM DETALLE_VENTA D
-JOIN VENTAS V ON D.IDVENTA = V.IDVENTA
+SELECT COUNT(*) INTO V_COUNT FROM detalle_venta D
+JOIN ventas V ON D.IDVENTA = V.IDVENTA
 WHERE D.idVenta = V_VENTA AND D.idEstado = 3;
 
 IF V_COUNT = 1 THEN
 
-UPDATE VENTAS SET idEstado = 4 WHERE IDVENTA = V_VENTA;
+UPDATE ventas SET idEstado = 4 WHERE IDVENTA = V_VENTA;
 
 END IF;        
         
@@ -4589,7 +4589,7 @@ SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE idVenta = V_VENTA and idDe
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
 FROM detalle_venta v
 join estado e on v.idEstado = e.idEstado
 WHERE idVenta = V_VENTA and idDetalle_Venta = P_idDetalle_Venta;
@@ -4606,7 +4606,7 @@ ELSE
 
 SELECT idVenta INTO  V_VENTA  FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
 FROM detalle_venta v
 join estado e on v.idEstado = e.idEstado
 WHERE idVenta = V_VENTA and idDetalle_Venta = P_idDetalle_Venta;
@@ -4627,7 +4627,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Registrar_Detalle_Venta_Por_Pagar`(
 
@@ -4648,22 +4648,22 @@ BEGIN
     DECLARE V_IDVENTA INT;
     DECLARE V_STOCK INT;
     
-    SELECT STOCK INTO V_STOCK FROM PRODUCTO WHERE IDPRODUCTO = P_idItem;
+    SELECT STOCK INTO V_STOCK FROM producto WHERE IDPRODUCTO = P_idItem;
     
 if P_cantidad > V_STOCK then
-SELECT CONCAT(MENSAJE,', NO HAY STOCK DISPONIBLE.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', NO HAY STOCK DISPONIBLE.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 SET P_VENTA = 0;
 else    
         
-SELECT COUNT(*) INTO V_COUNT FROM DETALLE_VENTA WHERE codDetVenta = V_COD;
+SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE codDetVenta = V_COD;
 
 IF V_COUNT = 0 THEN 
 
-SELECT COUNT(*) INTO V_COUNT FROM VENTAS WHERE idCliente = P_idCliente and idEstado = 3;
+SELECT COUNT(*) INTO V_COUNT FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;
 
 if V_COUNT = 0 then
 
-    	set V_MAX = ( select idVenta from Ventas order by idVenta desc limit 1 );
+    	set V_MAX = ( select idVenta from ventas order by idVenta desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('V000'  ,  CAST(V_MAX as CHAR)));
@@ -4683,10 +4683,10 @@ if V_COUNT = 0 then
 
 SET V_DETFECHA := CURTIME();
     
-	INSERT INTO FECHA (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
-	SELECT IDFECHA INTO V_IDFECHA FROM FECHA WHERE DETFECHA = V_DETFECHA and registered = CURTIME();    
+	INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
+	SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA and registered = CURTIME();    
         
-INSERT INTO VENTAS 
+INSERT INTO ventas 
 
 	(codVenta,
     idCliente,
@@ -4701,18 +4701,18 @@ VALUES
     COMMIT;
 
 SELECT idVenta into V_IDVENTA
-FROM VENTAS v
+FROM ventas v
 join estado e on v.idEstado = e.idEstado
 where codVenta = V_COD;
 
 else
 
 SELECT idVenta into V_IDVENTA
-FROM VENTAS WHERE idCliente = P_idCliente and idEstado = 3;
+FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;
 
 end if;
 
-    	set V_MAX = ( select idDetalle_Venta from DETALLE_VENTA order by idDetalle_Venta desc limit 1);
+    	set V_MAX = ( select idDetalle_Venta from detalle_venta order by idDetalle_Venta desc limit 1);
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('D000'  ,  CAST(V_MAX as CHAR)));
@@ -4746,7 +4746,7 @@ end if;
     
     set V_SUBTOTAL := V_DESCUENTO*(P_Cantidad*V_PRECIO);
         
-INSERT INTO DETALLE_VENTA 
+INSERT INTO detalle_venta 
 
 	(codDetVenta,
     idVenta, idEstado,
@@ -4760,12 +4760,12 @@ VALUES
     P_idItem, P_Cantidad,
     V_DESCUENTO, V_SUBTOTAL);
 
-SELECT COUNT(*) INTO V_COUNT FROM DETALLE_VENTA WHERE codDetVenta = V_COD;
+SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE codDetVenta = V_COD;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
-FROM DETALLE_VENTA v
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
+FROM detalle_venta v
 join estado e on v.idEstado = e.idEstado
 where codDetVenta = V_COD;
 
@@ -4781,7 +4781,7 @@ END IF;
 
 ELSE
 
-SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS MENSAJE FROM MENSAJE WHERE IDMENSAJE = 2;
+SELECT CONCAT(MENSAJE,', DEBE TRATARSE DE UN REGISTRO DUPLICADO.') AS mensaje FROM mensaje WHERE IDMENSAJE = 2;
 
 END IF;
 END IF;
@@ -4799,7 +4799,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp.Registrar_Venta_Pagada`(
 
@@ -4811,20 +4811,20 @@ BEGIN
 	DECLARE V_COUNT INT;
     DECLARE V_IDVENTA INT;
 
-SELECT COUNT(*) into V_COUNT FROM VENTAS WHERE idCliente = P_idCliente AND idEstado = 3;
+SELECT COUNT(*) into V_COUNT FROM ventas WHERE idCliente = P_idCliente AND idEstado = 3;
 
 IF V_COUNT = 1 THEN 
 	    
 SELECT IDVENTA INTO V_IDVENTA FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;        
-UPDATE VENTAS SET idEstado = 4 where idCliente = P_idCliente;
+UPDATE ventas SET idEstado = 4 where idCliente = P_idCliente;
 CALL `sp.Registrar_Detalle_Venta_Por_Pagar`();
 
-SELECT COUNT(*) into V_COUNT FROM VENTAS WHERE idVenta = V_IDVENTA and idCliente = P_idCliente AND idEstado = 4;
+SELECT COUNT(*) into V_COUNT FROM ventas WHERE idVenta = V_IDVENTA and idCliente = P_idCliente AND idEstado = 4;
 
 IF V_COUNT = 1 THEN 
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
-FROM VENTAS v
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
+FROM ventas v
 join estado e on v.idEstado = e.idEstado
 WHERE idVenta = V_IDVENTA and idCliente = P_idCliente;
 
@@ -4838,8 +4838,8 @@ END IF;
 
 ELSE
 
-SELECT CONCAT((SELECT MENSAJE FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
-FROM VENTAS v
+SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 1), ': ', desEstado) as MENSAJE
+FROM ventas v
 join estado e on v.idEstado = e.idEstado
 WHERE idCliente = P_idCliente;
 
