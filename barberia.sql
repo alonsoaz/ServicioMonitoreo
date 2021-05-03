@@ -1425,7 +1425,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio
+SELECT COUNT(*) INTO V_COUNT FROM servicio
 where nomServ like concat ('%',P_words,'%') or descripcion like concat ('%',P_words,'%') or codServicio like concat ('%',P_words,'%');
 
 IF V_COUNT > 0 THEN 
@@ -1871,20 +1871,20 @@ SELECT COUNT(*) INTO V_COUNT FROM detalle_venta WHERE idDetalle_Venta = P_idDeta
 
 IF V_COUNT = 1 THEN 
 
-	select idventa into venta from detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
+	select idventa into venta FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
 	DELETE FROM detalle_venta WHERE idDetalle_Venta = P_idDetalle_Venta;
     
-    select count(*) into v_count from detalle_venta where idVenta = venta and idEstado = 3;
+    select count(*) into v_count FROM detalle_venta where idVenta = venta and idEstado = 3;
     
     if V_COUNT = 0 then
     
     update ventas set idEstado = 4 where idVenta = venta;
     
-    select count(*) into v_count from detalle_venta where idVenta = venta and idEstado = 4;
+    select count(*) into v_count FROM detalle_venta where idVenta = venta and idEstado = 4;
     
     if V_COUNT = 0 then
     
-    delete from ventas where idVenta = venta and idEstado = 3;
+    delete FROM ventas where idVenta = venta and idEstado = 3;
     
     end if;
     
@@ -2051,7 +2051,7 @@ SELECT
 
 CONCAT('RESERVA ELIMINADA PARA EL CLIENTE: ',d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from cliente c
+FROM cliente c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -2063,7 +2063,7 @@ SELECT
 
 CONCAT('NO EXISTEN RESERVAS PENDIENTES PARA EL CLIENTE: ',d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from cliente c
+FROM cliente c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -2269,7 +2269,7 @@ BEGIN
     declare V_SUBTOTAL DOUBLE; 
     DECLARE V_IDVENTA INT;
         
-select count(*) into V_COUNT from reserva r
+select count(*) into V_COUNT FROM reserva r
 join servicio s on r.idServicio = s.idServicio
 join fecha h on r.idHoraIni = h.idFecha
 where idBarbero = P_idBarbero and idCliente = P_idCliente and h.detFecha = CAST(P_DTconsulta AS DATETIME) and s.idServicio = P_idServicio;
@@ -2354,13 +2354,13 @@ set V_DETFECHA := cast(P_DTconsulta as datetime);
 INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
 SELECT IDFECHA into V_IDFECHA FROM fecha WHERE DETFECHA = CAST(P_DTconsulta AS DATETIME) and registered = CURTIME();
 
-SELECT cast(ADDTIME(CAST(V_DETFECHA AS DATETIME), concat('00:',minutos,':00')) as datetime) into V_DETFECHAFIN from servicio where idServicio = P_idServicio;
+SELECT cast(ADDTIME(CAST(V_DETFECHA AS DATETIME), concat('00:',minutos,':00')) as datetime) into V_DETFECHAFIN FROM servicio where idServicio = P_idServicio;
 
 -- set V_DETFECHAFIN := cast(('2018/12/20 06:51:00' + MINUTOS) as datetime);
 INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHAFIN, CURTIME() );
 SELECT IDFECHA INTO V_IDFECHFIN FROM fecha WHERE DETFECHA = V_DETFECHAFIN and registered = CURTIME();
 
-    set V_MAX = ( select last_insert_id() from reserva limit 1 );
+    set V_MAX = ( select last_insert_id() FROM reserva limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('R000'  ,  CAST(V_MAX as CHAR)));
@@ -2380,7 +2380,7 @@ SELECT IDFECHA INTO V_IDFECHFIN FROM fecha WHERE DETFECHA = V_DETFECHAFIN and re
 insert into reserva (codReserva, idEstado, idcliente, idBarbero, idHoraIni, idServicio, idHoraFin) values (V_COD, 3, P_idCliente, P_idBarbero, V_IDFECHA, P_idServicio, V_IDFECHFIN);
 commit;
 
-select idReserva into P_idReserva from reserva where codReserva = V_COD;
+select idReserva into P_idReserva FROM reserva where codReserva = V_COD;
 
 SELECT CONCAT(MENSAJE,'. BARBERO: ', (SELECT CONCAT(NOMBRE, ' ', APELLIDO) FROM barbero B JOIN datos D ON B.IDDATOS = D.IDDATOS where IDBARBERO = P_idBarbero)) AS mensaje FROM mensaje WHERE IDMENSAJE = 8;
 
@@ -2452,7 +2452,7 @@ VALUES
     
 SELECT IDDATOS INTO V_IDDATOS FROM datos WHERE DNI = P_DNI;    
 
-        set V_MAX = ( select idBarbero from barbero order by 1 desc limit 1 );
+        set V_MAX = ( select idBarbero FROM barbero order by 1 desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('B000'  ,  CAST(V_MAX as CHAR)));
@@ -2560,7 +2560,7 @@ VALUES
     
 SELECT IDDATOS INTO V_IDDATOS FROM datos WHERE DNI = P_DNI;    
 
-	set V_MAX = ( select idCliente from cliente order by 1 desc limit 1 );
+	set V_MAX = ( select idCliente FROM cliente order by 1 desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('C000'  ,  CAST(V_MAX as CHAR)));
@@ -2640,7 +2640,7 @@ SELECT COUNT(*) INTO V_COUNT FROM marca_producto WHERE nombMarca = P_nombMarca;
 
 IF V_COUNT = 0 THEN 
 
-    set V_MAX = ( select last_insert_id() from marca_producto limit 1 ); 
+    set V_MAX = ( select last_insert_id() FROM marca_producto limit 1 ); 
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('M000'  ,  CAST(V_MAX as CHAR)));
@@ -2730,7 +2730,7 @@ IF V_COUNT = 0 THEN
 INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
 SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-	set V_MAX = ( select last_insert_id() from producto LIMIT 1);
+	set V_MAX = ( select last_insert_id() FROM producto LIMIT 1);
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('P000'  ,  CAST(V_MAX as CHAR)));
@@ -2834,7 +2834,7 @@ IF V_COUNT = 0 THEN
 INSERT INTO fecha (DETFECHA, REGISTERED) VALUES ( V_DETFECHA, CURTIME() );
 SELECT IDFECHA INTO V_IDFECHA FROM fecha WHERE DETFECHA = V_DETFECHA;
 
-	set V_MAX = ( select idServicio from servicio order by 1 desc limit 1);
+	set V_MAX = ( select idServicio FROM servicio order by 1 desc limit 1);
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('S000'  ,  CAST(V_MAX as CHAR)));
@@ -2993,7 +2993,7 @@ SELECT COUNT(*) into V_COUNT FROM usuario WHERE idTipo_Usuario = P_idTipoUsuario
 
 IF V_COUNT = 0 THEN 
 
-    set V_MAX = ( select idUsuario from usuario order by 1 desc limit 1 );
+    set V_MAX = ( select idUsuario FROM usuario order by 1 desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('U000'  ,  CAST(V_MAX as CHAR)));
@@ -3010,7 +3010,7 @@ IF V_COUNT = 0 THEN
 		set V_COD = (select 'U0001');
 	end if;
 
-Select detalle into P_cargo from tipo_usuario where idTipo_Usuario = P_idTipoUsuario;
+Select detalle into P_cargo FROM tipo_usuario where idTipo_Usuario = P_idTipoUsuario;
 
 INSERT INTO usuario 
 
@@ -3043,11 +3043,11 @@ SELECT COUNT(*) INTO V_COUNT FROM usuario WHERE idTipo_Usuario = P_idTipoUsuario
 IF V_COUNT = 1 THEN 
 
 SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 10), ' USUARIO: ', AKA) AS MENSAJE
-FROM USUARIO
+FROM usuario
 where aka = p_aka and pass = p_pass;
 
 SELECT idUsuario into V_IDDATOS
-FROM USUARIO
+FROM usuario
 where codUsuario = V_COD;
 
 set P_idUsuario := V_IDDATOS;
@@ -3090,7 +3090,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Barbero;
+SELECT COUNT(*) INTO V_COUNT FROM barbero;
 
 IF V_COUNT > 0 THEN 
 
@@ -3131,7 +3131,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Barbero;
+SELECT COUNT(*) INTO V_COUNT FROM barbero;
 
 IF V_COUNT > 0 THEN 
 
@@ -3180,7 +3180,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Cliente;
+SELECT COUNT(*) INTO V_COUNT FROM cliente;
 
 IF V_COUNT > 0 THEN 
 
@@ -3270,7 +3270,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto;
+SELECT COUNT(*) INTO V_COUNT FROM producto;
 
 IF V_COUNT > 0 THEN 
 
@@ -3313,7 +3313,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Producto;
+SELECT COUNT(*) INTO V_COUNT FROM producto;
 
 IF V_COUNT > 0 THEN 
 
@@ -3385,7 +3385,7 @@ h.detFecha as 'INICIO',
 h.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from reserva r
+FROM reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -3404,7 +3404,7 @@ SELECT
 
 CONCAT('NO EXISTEN RESERVAS PENDIENTES PARA EL BARBERO: ',d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from barbero c
+FROM barbero c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -3456,7 +3456,7 @@ h.detFecha as 'INICIO',
 f.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from reserva r
+FROM reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -3515,7 +3515,7 @@ h.detFecha as 'INICIO',
 h.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from reserva r
+FROM reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -3534,7 +3534,7 @@ SELECT
 
 CONCAT('NO EXISTEN RESERVAS PENDIENTES PARA EL CLIENTE: ',d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from cliente c
+FROM cliente c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -3565,7 +3565,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio;
+SELECT COUNT(*) INTO V_COUNT FROM servicio;
 
 IF V_COUNT > 0 THEN 
 
@@ -3606,7 +3606,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM Servicio;
+SELECT COUNT(*) INTO V_COUNT FROM servicio;
 
 IF V_COUNT > 0 THEN 
 
@@ -3694,7 +3694,7 @@ BEGIN
 
 DECLARE V_COUNT INT;
 
-SELECT COUNT(*) INTO V_COUNT FROM USUARIO;
+SELECT COUNT(*) INTO V_COUNT FROM usuario;
 
 IF V_COUNT > 0 THEN 
 
@@ -3739,7 +3739,7 @@ begin
 
 declare V_COUNT INT;
 
-    select count(*) INTO V_COUNT from datos d
+    select count(*) INTO V_COUNT FROM datos d
     join cliente c on d.idDatos = c.idDatos
 	where DNI = P_DNI and pass = P_password;
     
@@ -3759,7 +3759,7 @@ declare V_COUNT INT;
         
     ELSE
     
-		select count(*) INTO V_COUNT from datos
+		select count(*) INTO V_COUNT FROM datos
 		where DNI = P_DNI;
     
 			IF V_COUNT = 1 THEN 
@@ -3803,28 +3803,28 @@ begin
 
 declare V_COUNT INT;
 
-    select count(*) INTO V_COUNT from USUARIO
+    select count(*) INTO V_COUNT FROM usuario
     where aka = P_AKA and pass = P_pass;
     
     IF V_COUNT = 1 THEN 
     
 		SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 10), ' USUARIO: ', AKA) as MENSAJE, idUsuario as id
-		FROM USUARIO
+		FROM usuario
 		where aka = P_AKA and pass = P_pass
 		;
 		SELECT idUsuario INTO P_ID
-		FROM USUARIO
+		FROM usuario
 		where aka = P_AKA and pass = P_pass
 		;
     ELSE
 		SET P_ID := 0;
-		select count(*) INTO V_COUNT from USUARIO
+		select count(*) INTO V_COUNT FROM usuario
 		where aka = P_AKA;
     
 			IF V_COUNT = 1 THEN 
     
 				SELECT CONCAT((SELECT mensaje FROM mensaje WHERE idMensaje = 11), ' USUARIO: ', AKA) AS MENSAJE
-				FROM USUARIO
+				FROM usuario
 				where aka = P_AKA
 				;
 
@@ -4028,7 +4028,7 @@ BEGIN
 		   codCliente as 'CODIGO_CLIENTE',  
            e.desestado as ESTADO,
            concat(a.Nombre,' ', a.Apellido) 			AS CLIENTE, 
-           (select sum(subtotal) from detalle_venta t 
+           (select sum(subtotal) FROM detalle_venta t 
            join ventas v on t.idVenta = v.idVenta 
            where v.idVenta = t.idVenta) 				as TOTAL, 
            f.detFecha AS fecha 
@@ -4072,7 +4072,7 @@ select v.idVenta,
 		   sum(subtotal) as TOTAL,
            f.detFecha AS fecha 
            
-           from detalle_venta t 
+           FROM detalle_venta t 
            join ventas v on t.idVenta = v.idVenta
            join fecha f on v.idFecha = f.idFecha
 		   join cliente c ON v.idCliente = c.idCliente
@@ -4115,7 +4115,7 @@ Select idVenta into P_idVenta FROM ventas v WHERE v.idEstado = 3 and v.idCliente
 		   codCliente as 'CODIGO_CLIENTE',  
            e.desestado as ESTADO,
            concat(a.Nombre,' ', a.Apellido) 			AS CLIENTE, 
-           (select sum(subtotal) from detalle_venta t 
+           (select sum(subtotal) FROM detalle_venta t 
            join ventas v on t.idVenta = v.idVenta
            where t.idEstado = 3 and v.idCliente = P_idCliente) 		as TOTAL, 
            f.detFecha AS fecha 
@@ -4170,7 +4170,7 @@ SELECT
 
 CONCAT('SE PAGÓ LA reserva DEL CLIENTE: ', d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from cliente c
+FROM cliente c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -4182,7 +4182,7 @@ SELECT
 
 CONCAT('NO EXISTEN RESERVAS PENDIENTES PARA EL CLIENTE: ', d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from cliente c
+FROM cliente c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -4483,7 +4483,7 @@ h.detFecha as 'INICIO',
 f.detFecha as 'FIN',
 e.desEstado as 'ESTADO'
 
-from reserva r
+FROM reserva r
 
 join cliente c on r.idCliente = c.idCliente
 join barbero b on r.idBarbero = b.idBarbero
@@ -4502,7 +4502,7 @@ SELECT
 
 CONCAT('NO EXISTEN RESERVAS PENDIENTES PARA EL CLIENTE: ', d.Nombre, ' ', d.ApelLido,'.') AS MENSAJE
 
-from cliente c
+FROM cliente c
 
 join datos d on d.idDatos = c.idDatos
 
@@ -4636,7 +4636,7 @@ SELECT COUNT(*) INTO V_COUNT FROM tipo_usuario t left join usuario u on t.idTipo
 
 IF V_COUNT > 0 THEN 
 
-select t.detalle,  t.idTipo_usuario from tipo_usuario t left join usuario u on t.idTipo_usuario = u.idTipo_usuario where u.idTipo_usuario is null;
+select t.detalle,  t.idTipo_usuario FROM tipo_usuario t left join usuario u on t.idTipo_usuario = u.idTipo_usuario where u.idTipo_usuario is null;
 
 else
 
@@ -4813,7 +4813,7 @@ SELECT COUNT(*) INTO V_COUNT FROM ventas WHERE idCliente = P_idCliente and idEst
 
 if V_COUNT = 0 then
 
-    	set V_MAX = ( select idVenta from ventas order by idVenta desc limit 1 );
+    	set V_MAX = ( select idVenta FROM ventas order by idVenta desc limit 1 );
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('V000'  ,  CAST(V_MAX as CHAR)));
@@ -4862,7 +4862,7 @@ FROM ventas WHERE idCliente = P_idCliente and idEstado = 3;
 
 end if;
 
-    	set V_MAX = ( select idDetalle_Venta from detalle_venta order by idDetalle_Venta desc limit 1);
+    	set V_MAX = ( select idDetalle_Venta FROM detalle_venta order by idDetalle_Venta desc limit 1);
 	if V_MAX >= 1 and V_MAX <= 8 then
 		set V_MAX = V_MAX + 1;
 		set V_COD = (select concat('D000'  ,  CAST(V_MAX as CHAR)));
@@ -4892,7 +4892,7 @@ end if;
     end if;
     
     select precio into V_PRECIO
-    from producto where idProducto = P_idItem;
+    FROM producto where idProducto = P_idItem;
     
     set V_SUBTOTAL := V_DESCUENTO*(P_Cantidad*V_PRECIO);
         
