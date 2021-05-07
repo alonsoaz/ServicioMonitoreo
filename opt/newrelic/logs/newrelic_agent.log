@@ -1,0 +1,26 @@
+2021-05-07T10:44:19,500-0500 [6836 1] com.newrelic INFO: Writing to New Relic log file: /Users/augusto/Documents/SpringWorkspace/ServicioBarberiaSpringboot/opt/newrelic/logs/newrelic_agent.log
+2021-05-07T10:44:19,500-0500 [6836 1] com.newrelic INFO: JRE vendor Oracle Corporation version 1.8.0_291
+2021-05-07T10:44:19,500-0500 [6836 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 25.291-b10
+2021-05-07T10:44:19,501-0500 [6836 1] com.newrelic INFO: OS Mac OS X version 10.16 arch x86_64
+2021-05-07T10:44:19,501-0500 [6836 1] com.newrelic INFO: Agent Host: blueocean.local IP: 127.0.0.1
+2021-05-07T10:44:19,501-0500 [6836 1] com.newrelic INFO: New Relic Agent v6.5.0 is initializing...
+2021-05-07T10:44:20,314-0500 [6836 7] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2021-05-07T10:44:21,923-0500 [6836 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2021-05-07T10:44:23,251-0500 [6836 1] com.newrelic INFO: Setting audit_mode to false
+2021-05-07T10:44:23,507-0500 [6836 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is /Users/augusto/Documents/SpringWorkspace/ServicioBarberiaSpringboot/opt/newrelic/./newrelic.yml
+2021-05-07T10:44:23,520-0500 [6836 1] com.newrelic INFO: New Relic Agent v6.5.0 has started
+2021-05-07T10:44:23,520-0500 [6836 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@2b71fc7e
+2021-05-07T10:44:23,520-0500 [6836 1] com.newrelic INFO: Premain startup complete in 5,141ms
+2021-05-07T10:44:26,695-0500 [6836 1] com.newrelic INFO: Server Info: Apache Tomcat/8.5.37
+2021-05-07T10:44:28,518-0500 [6836 31] com.newrelic INFO: Host name is blueocean.local, display host blueocean.local for application barberia
+2021-05-07T10:44:29,519-0500 [6836 31] com.newrelic INFO: Collector redirection to collector-006.newrelic.com:443
+2021-05-07T10:44:30,172-0500 [6836 31] com.newrelic INFO: Max payload size is 1,000,000 bytes
+2021-05-07T10:44:30,172-0500 [6836 31] com.newrelic INFO: Agent run id: BY6jynP_dTqLADAfSTS-o1lglWC4AAIBAAAnIQEAABq0AgQ0vqNXAwAFNi41LjAAD2JsdWVvY2Vhbi5sb2NhbAAIYmFyYmVyaWE
+2021-05-07T10:44:30,173-0500 [6836 31] com.newrelic INFO: Agent 6836@blueocean.local/barberia connected to collector.newrelic.com:443
+2021-05-07T10:44:30,173-0500 [6836 31] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/3153737/applications/884908887
+2021-05-07T10:44:30,174-0500 [6836 31] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2021-05-07T10:44:30,177-0500 [6836 31] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2021-05-07T10:44:30,943-0500 [6836 31] com.newrelic INFO: Real user monitoring is enabled for application barberia. Auto instrumentation is enabled.
+2021-05-07T10:46:07,524-0500 [6836 6] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2021-05-07T10:46:07,538-0500 [6836 66] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@77443d7c tried to finish but ServiceManager not started
+2021-05-07T10:46:07,912-0500 [6836 6] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
